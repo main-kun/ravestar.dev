@@ -79,7 +79,8 @@ html {
 	overflow-y: scroll;
 }
 body {
-	max-width: 40em;
+	max-width: 50em;
+  font-size: 1.3rem;
 }
 
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
@@ -193,6 +194,11 @@ pre:not([class*="language-"]) {
 }
 code {
 	word-break: break-all;
+  letter-spacing: 0;
+  word-spacing: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-feature-setting: "liga" 0;
+  font-feature-settings: "liga" 0;
 }
 
 /* Header */
