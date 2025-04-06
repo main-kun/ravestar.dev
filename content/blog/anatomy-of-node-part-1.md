@@ -154,7 +154,12 @@ It provides the root object of JS execution and necessary built-in objects, like
 When JS code is executed, it always runs within a Context, which determines the functions and global
 variables available to the code. A single Isolate may contain multiple Contexts.
 
-Does Node.js do the same as our little hello-world? Well, yes and no. If you follow Node's own node.cc in
+Does Node.js do the same as our little hello-world? Well, yes and no. Let's look into Node's source and see if we can
+trace similarities. Here I will be using the
+[master](https://github.com/nodejs/node/tree/a2de5b9150da60c77144bb5333371eaca3fab936) branch at the time of writing,
+some details of the code may change at a later date.
+
+If you follow node.cc in
 src folder, you will find `NodeMainInstance` class used inside `StartInternal` function:
 
 ```cpp
@@ -387,7 +392,7 @@ printf("%s\n", *utf8);
 First we force the `isolate` to run the queue with `PerformMicrotaskCheckpoint`. Then we create a new script
 meant only to return the value of `message` to the C++ code. Since we're using the same `Context` we created
 earlier, the variable `message` is already defined in its lexical scope. So running the microtask queue has updated
-it to the new value. Once we run the compiled we get `"Promise was processed!"` as expected.
+it to the new value. Once we run the compiled binary we get `"Promise was processed!"` as expected.
 The full example with processing the queue is available on GitHub in
 [simple-runner-microtask.cc](https://github.com/main-kun/notjs/blob/main/simple-runner/simple-runner-microtask.cc)
 
