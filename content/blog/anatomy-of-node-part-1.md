@@ -1,7 +1,13 @@
+---
+title: "The Anatomy of Node: Understanding by Building"
+subtitle: "Part I - Getting started with V8"
+description: "Part 1 of a multipart series about building a Node.js runtime from scratch."
+date: 2025-04-06
+---
 
 After nearly a decade in software engineering, Node.js has been a constant presence in my work.
 Yet, despite using it extensively, I feel like I only have a vague idea of how it functions internally.
-Of course, I've heard the terms "libuv" and "v8" and I know what an event loop is,
+Of course, I've heard the terms "libuv" and "V8" and I know what an event loop is,
 but I don't have a coherent mental model of how it all
 comes together.
 
@@ -13,9 +19,9 @@ experience for Node.js in this blog series.
 
 We will build our own little JavaScript runtime from scratch, starting with compiling v8 and going from there.
 We will study Node's source code to see how it ticks inside, consider the ECMAScript spec for answers
-and think through the same design decisions Node authors have faced.
+and think through the same design decisions Node authors faced.
 By the end of the series, we will understand exactly how it all comes together,
-and we will have a fully working http server running in JavaScript that we will have built ourselves
+and we will have a fully working HTTP server running in JavaScript that we will have built ourselves
 
 ## Revving up the engine
 
@@ -95,10 +101,10 @@ Okay, we now have built the mighty v8. Let's now whip up a small C++ app that wi
 files with it.
 
 To start, we will just take Google's own [hello world example](https://chromium.googlesource.com/v8/v8/+/branch-heads/11.9/samples/hello-world.cc) with only a few modifications for reading a
-script from the filesystem. The whole source can be viewed [on github](https://github.com/main-kun/notjs/blob/main/simple-runner/simple-runner.cc), but here we will discuss the meaty
+script from the filesystem. The whole source can be viewed [on GitHub](https://github.com/main-kun/notjs/blob/main/simple-runner/simple-runner.cc), but here we will discuss the meaty
 part:
 
-```c++
+```cpp
   v8::Isolate::CreateParams create_params;
   create_params.array_buffer_allocator =
       v8::ArrayBuffer::Allocator::NewDefaultAllocator();
@@ -151,7 +157,7 @@ variables available to the code. A single Isolate may contain multiple Contexts.
 Does Node.js do the same as our little hello-world? Well, yes and no. If you follow Node's own node.cc in
 src folder, you will find `NodeMainInstance` class used inside `StartInternal` function:
 
-```c++
+```cpp
 // node/src/node.cc
 static ExitCode StartInternal(int argc, char** argv) {
   // Other setup stuff
@@ -167,7 +173,7 @@ static ExitCode StartInternal(int argc, char** argv) {
 
 Inside `NodeMainInstance` constructor the same `Isolate` we're using here is initialized in a similar fashion:
 
-```c++
+```cpp
 // node/src/node_main_instance.cc
 NodeMainInstance::NodeMainInstance(const SnapshotData* snapshot_data,
                                    uv_loop_t* event_loop,
@@ -193,7 +199,7 @@ NodeMainInstance::NodeMainInstance(const SnapshotData* snapshot_data,
 But Context initialization is a bit trickier. To save time, Node uses a pre-generated snapshot of v8 context to
 initialize the environment. We can see it in `CreateMainEnvironment` function, after the `snapshot_data` check:
 
-```c++
+```cpp
 // node/src/node_main_instance.cc
 NodeMainInstance::CreateMainEnvironment(ExitCode* exit_code) {
  // beginning of function ommited for clarity
@@ -265,7 +271,7 @@ Environment* CreateEnvironment(
 The function checks if the context is empty, and if it is - retrieves the context from the snapshot data.
 
 It makes sense to initialize the context from a static snapshot since at the start of execution, the environment
-is always the same. If the snapshot  is not available, Node initializes a new `Context` with an `Isolate` just
+is always the same. If the snapshot is not available, Node initializes a new `Context` with an `Isolate` just
 like we did.
 
 ### Are we done already?
@@ -293,7 +299,15 @@ JSON.stringify(Object.getOwnPropertyNames(globalThis));
 
 returns the following list
 ```js
-["Object","Function","Array","Number","parseFloat","parseInt","Infinity","NaN","undefined","Boolean","String","Symbol","Date","Promise","RegExp","Error","AggregateError","EvalError","RangeError","ReferenceError","SyntaxError","TypeError","URIError","globalThis","JSON","Math","Intl","ArrayBuffer","Atomics","Uint8Array","Int8Array","Uint16Array","Int16Array","Uint32Array","Int32Array","Float32Array","Float64Array","Uint8ClampedArray","BigUint64Array","BigInt64Array","DataView","Map","BigInt","Set","WeakMap","WeakSet","Proxy","Reflect","FinalizationRegistry","WeakRef","decodeURI","decodeURIComponent","encodeURI","encodeURIComponent","escape","unescape","eval","isFinite","isNaN","console","Iterator","SharedArrayBuffer","WebAssembly"]
+["Object","Function","Array","Number","parseFloat","parseInt","Infinity","NaN", 
+"undefined","Boolean","String","Symbol","Date","Promise","RegExp","Error","AggregateError",
+"EvalError","RangeError","ReferenceError","SyntaxError","TypeError","URIError","globalThis",
+"JSON","Math","Intl","ArrayBuffer","Atomics","Uint8Array","Int8Array","Uint16Array","Int16Array",
+"Uint32Array","Int32Array","Float32Array","Float64Array","Uint8ClampedArray","BigUint64Array",
+"BigInt64Array","DataView","Map","BigInt","Set","WeakMap","WeakSet","Proxy","Reflect",
+"FinalizationRegistry","WeakRef","decodeURI","decodeURIComponent","encodeURI",
+"encodeURIComponent","escape","unescape","eval","isFinite","isNaN","console","Iterator",
+"SharedArrayBuffer","WebAssembly"]
 ```
 
 Contrary to my expectations, `console` is actually here! However, `console.log` inside the script does not seem to
@@ -301,12 +315,29 @@ be doing anything currently. The list of built-ins is much shorter than Node's. 
 we get a list about two times longer.
 
 ```js
-["Object","Function","Array","Number","parseFloat","parseInt","Infinity","NaN","undefined","Boolean","String","Symbol","Date","Promise","RegExp","Error","AggregateError","EvalError","RangeError","ReferenceError","SyntaxError","TypeError","URIError","globalThis","JSON","Math","Intl","ArrayBuffer","Uint8Array","Int8Array","Uint16Array","Int16Array","Uint32Array","Int32Array","Float32Array","Float64Array","Uint8ClampedArray","BigUint64Array","BigInt64Array","DataView","Map","BigInt","Set","WeakMap","WeakSet","Proxy","Reflect","FinalizationRegistry","WeakRef","decodeURI","decodeURIComponent","encodeURI","encodeURIComponent","escape","unescape","eval","isFinite","isNaN","console","SharedArrayBuffer","Atomics","WebAssembly","process","global","Buffer","queueMicrotask","clearImmediate","setImmediate","structuredClone","URL","URLSearchParams","DOMException","clearInterval","clearTimeout","setInterval","setTimeout","BroadcastChannel","AbortController","AbortSignal","Event","EventTarget","MessageChannel","MessagePort","MessageEvent","atob","btoa","Blob","Performance","performance","TextEncoder","TextDecoder","TransformStream","TransformStreamDefaultController","WritableStream","WritableStreamDefaultController","WritableStreamDefaultWriter","ReadableStream","ReadableStreamDefaultReader","ReadableStreamBYOBReader","ReadableStreamBYOBRequest","ReadableByteStreamController","ReadableStreamDefaultController","ByteLengthQueuingStrategy","CountQueuingStrategy","TextEncoderStream","TextDecoderStream","CompressionStream","DecompressionStream","fetch","FormData","Headers","Request","Response"]
+["Object","Function","Array","Number","parseFloat","parseInt","Infinity","NaN",
+"undefined","Boolean","String","Symbol","Date","Promise","RegExp","Error","AggregateError",
+"EvalError","RangeError","ReferenceError","SyntaxError","TypeError","URIError","globalThis",
+"JSON","Math","Intl","ArrayBuffer","Uint8Array","Int8Array","Uint16Array","Int16Array",
+"Uint32Array","Int32Array","Float32Array","Float64Array","Uint8ClampedArray","BigUint64Array",
+"BigInt64Array","DataView","Map","BigInt","Set","WeakMap","WeakSet","Proxy","Reflect",
+"FinalizationRegistry","WeakRef","decodeURI","decodeURIComponent","encodeURI",
+"encodeURIComponent","escape","unescape","eval","isFinite","isNaN","console",
+"SharedArrayBuffer","Atomics","WebAssembly","process","global","Buffer","queueMicrotask",
+"clearImmediate","setImmediate","structuredClone","URL","URLSearchParams","DOMException",
+"clearInterval","clearTimeout","setInterval","setTimeout","BroadcastChannel","AbortController",
+"AbortSignal","Event","EventTarget","MessageChannel","MessagePort","MessageEvent","atob","btoa",
+"Blob","Performance","performance","TextEncoder","TextDecoder","TransformStream",
+"TransformStreamDefaultController","WritableStream","WritableStreamDefaultController",
+"WritableStreamDefaultWriter","ReadableStream","ReadableStreamDefaultReader","ReadableStreamBYOBReader",
+"ReadableStreamBYOBRequest","ReadableByteStreamController","ReadableStreamDefaultController",
+"ByteLengthQueuingStrategy","CountQueuingStrategy","TextEncoderStream","TextDecoderStream",
+"CompressionStream","DecompressionStream","fetch","FormData","Headers","Request","Response"]
 ```
 
-Seeing the built-ins laid out this way, it becomes obvious where exactly Node's own global definitions start.
+Seeing the built-ins laid out this way, it becomes obvious where Node's own global definitions start.
 Right after "WebAssembly", starting from "process". Even the order, starting from "process", "global" and "Buffer"
-seems logical in terms of their importance for Node.
+_seems logical in terms of their importance for Node.
 ### Are we async yet?
 
 The state of async at this point is rather interesting. As we've seen previously, `Promise` built-in is defined
@@ -331,8 +362,12 @@ message;
 ```
 
 Running this script in our current implementation results in the `Initial value` being printed to terminal.
-Why? Because the micro task queue has not been processed. To actually process the task queue, let's do a quick and
-dirty modification to our program. We will force V8 to process the queue and output it to our C++ code again:
+Why? Because the micro task queue has not been processed.
+This is the same behavior as in Node.js, where the microtask
+queue will be evaluated after the process has finished. But since
+we have access to internals, we can do things a bit differently. To actually process the task queue,
+let's do a quick and dirty modification to our program. We will force V8 to process the queue and
+output it to our C++ code again:
 
 ```c++
 
@@ -349,9 +384,13 @@ v8::String::Utf8Value utf8(isolate, result);
 printf("%s\n", *utf8);
 
 ```
+First we force the `isolate` to run the queue with `PerformMicrotaskCheckpoint`. Then we create a new script
+meant only to return the value of `message` to the C++ code. Since we're using the same `Context` we created
+earlier, the variable `message` is already defined in its lexical scope. So running the microtask queue has updated
+it to the new value. Once we run the compiled we get `"Promise was processed!"` as expected.
+The full example with processing the queue is available on GitHub in
+[simple-runner-microtask.cc](https://github.com/main-kun/notjs/blob/main/simple-runner/simple-runner-microtask.cc)
 
-The full example with processing the queue is available on GitHub in [simple-runner-microtask.cc](https://github.com/main-kun/notjs/blob/main/simple-runner/simple-runner-microtask.cc)
-Now running the compiled binary we get `"Promise was processed!"` as expected.
 ### The Road Goes Ever On
 
 Let's take stock of what we figured out so far:

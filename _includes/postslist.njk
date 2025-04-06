@@ -1,9 +1,53 @@
-{%- css %}.postlist { counter-reset: start-from {{ (postslistCounter or postslist.length) + 1 }} }{% endcss %}
+{# includes/postlist.njk #}
+{%- css -%}
+.postlist {
+  counter-reset: start-from {{ (postslistCounter or postslist.length) + 1 }};
+  list-style: none;
+  padding: 0;
+}
+.postlist-item {
+  counter-increment: start-from -1;
+  margin-bottom: 1.5rem;
+}
+.postlist-title {
+  font-size: 1.25rem;
+  margin: 0;
+}
+.postlist-link {
+  text-decoration: none;
+  color: inherit;
+}
+.postlist-subtitle {
+  display: block;
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0.25rem 0 0.5rem;
+}
+.postlist-date {
+  font-size: 0.8rem;
+  color: #999;
+}
+{%- endcss -%}
+
 <ol reversed class="postlist">
 {%- for post in postslist | reverse %}
-	<li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %}">
-		<a href="{{ post.url }}" class="postlist-link">{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
-		<time class="postlist-date" datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate("LLLL yyyy") }}</time>
-	</li>
+  <li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %}">
+    <h4 class="postlist-title">
+      <a href="{{ post.url }}" class="postlist-link">
+        {% if post.data.title %}
+          {{ post.data.title }}
+        {% else %}
+          <code>{{ post.url }}</code>
+        {% endif %}
+      </a>
+    </h3>
+    {% if post.data.subtitle %}
+      <p class="postlist-subtitle">{{ post.data.subtitle }}</p>
+    {% endif %}
+    <time
+      class="postlist-date"
+      datetime="{{ post.date | htmlDateString }}"
+    >{{ post.date | readableDate("LLLL yyyy") }}</time>
+  </li>
 {%- endfor %}
 </ol>
