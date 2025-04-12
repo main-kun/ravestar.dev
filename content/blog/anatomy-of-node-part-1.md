@@ -1,7 +1,7 @@
 ---
 title: "The Anatomy of Node: Understanding by Building"
 subtitle: "Part I - Getting started with V8"
-description: "Part 1 of a multipart series about building a Node.js runtime from scratch."
+description: "Part 1 of a multipart series about building a JavaScript runtime from scratch."
 date: 2025-04-06
 ---
 
