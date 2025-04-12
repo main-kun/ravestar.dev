@@ -6,7 +6,7 @@ const eleventyNavigation = {
 ---
 # About
 
-Hi! I'm Ivan. I'm a software engineer and I like exploring how technology works.
+Hi! I'm Ivan. I'm a software engineer and I like exploring technology.
 
 Currently working @Yandex
 
