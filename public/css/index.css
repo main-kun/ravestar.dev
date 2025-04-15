@@ -2,7 +2,7 @@
 /* Defaults */
 :root {
 	--font-family: "Source Serif 4", serif;
-	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+	--font-family-monospace: Hack,DejaVu Sans Mono,Monaco,Consolas,Ubuntu Mono,monospac;
 	--dark-mode-link: #2fc4ff;
 	--dark-mode-link-active: #082840;
 	--dark-mode-link-visited: #2fc4ffd9;
@@ -197,7 +197,6 @@ pre:not([class*="language-"]) {
 	overflow-x: auto;
 }
 code {
-	word-break: break-all;
   letter-spacing: 0;
   word-spacing: normal;
   text-rendering: optimizeLegibility;
