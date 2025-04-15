@@ -2,7 +2,7 @@
 /* Defaults */
 :root {
 	--font-family: "Source Serif 4", serif;
-	--font-family-monospace: Hack,DejaVu Sans Mono,Monaco,Consolas,Ubuntu Mono,monospac;
+	--font-family-monospace: Hack,DejaVu Sans Mono,Monaco,Consolas,Ubuntu Mono,monospace;
 	--dark-mode-link: #2fc4ff;
 	--dark-mode-link-active: #082840;
 	--dark-mode-link-visited: #2fc4ffd9;
