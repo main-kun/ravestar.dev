@@ -181,7 +181,7 @@ code {
 	font-family: var(--font-family-monospace);
 }
 code[class*="language-"], pre[class*="language-"] {
-	font-family: var(--font-family-monospace) !important;
+	font-family: var(--font-family-monospace);
 }
 
 pre:not([class*="language-"]) {
