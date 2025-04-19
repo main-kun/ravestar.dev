@@ -1,11 +1,10 @@
-/* Defaults */
-/* Defaults */
 :root {
 	--font-family: "Source Serif 4", serif;
 	--font-family-monospace: Hack,DejaVu Sans Mono,Monaco,Consolas,Ubuntu Mono,monospace;
 	--dark-mode-link: #2fc4ff;
-	--dark-mode-link-active: #082840;
-	--dark-mode-link-visited: #2fc4ffd9;
+	--dark-mode-link-active: #82d9fb;
+	--dark-mode-link-visited: #28abdf;
+	--code-background: #111b27;
 
 }
 
@@ -46,8 +45,8 @@
 	--color-gray-90: #dad8d8;
 
 	--text-color-link: var(--dark-mode-link);
-	--text-color-link-active: var(--dark-mode-link);
-	--text-color-link-visited: var(--dark-mode-link);
+	--text-color-link-active: var(--dark-mode-link-active);
+	--text-color-link-visited: var(--dark-mode-link-visited);
 
 	--background-color: rgb(39 54 76)
 }
@@ -59,8 +58,8 @@
 		--color-gray-90: #dad8d8;
 
 		--text-color-link: var(--dark-mode-link);
-		--text-color-link-active: var(--dark-mode-link);
-		--text-color-link-visited: var(--dark-mode-link);
+		--text-color-link-active: var(--dark-mode-link-active);
+		--text-color-link-visited: var(--dark-mode-link-visited);
 
 		--background-color: rgb(39 54 76)
 	}
@@ -200,12 +199,19 @@ pre:not([class*="language-"]) {
 	word-break: normal;
 	overflow-x: auto;
 }
+
+code:not([class*="language-"]) {
+	font-size: 1rem;
+	background-color: var(--code-background);
+	padding: 3px;
+	color: #dad8d8;
+}
 code {
-  letter-spacing: 0;
-  word-spacing: normal;
-  text-rendering: optimizeLegibility;
-  -webkit-font-feature-setting: "liga" 0;
-  font-feature-settings: "liga" 0;
+	letter-spacing: 0;
+	word-spacing: normal;
+	text-rendering: optimizeLegibility;
+	-webkit-font-feature-setting: "liga" 0;
+	font-feature-settings: "liga" 0;
 }
 
 /* Header */
@@ -357,18 +363,18 @@ header {
 header {
 	a[href]:hover,
 	a[href][aria-current="page"]:hover {
-		color: var(--text-color-link);
+		color: var(--color-gray-90);
 	}
 
 	a[href]:visited,
 	a[href][aria-current="page"]:visited {
-		color: var(--text-color-link);
+		color: var(--color-gray-90);
 		text-decoration: none;
 	}
 
 	a[href]:active,
 	a[href][aria-current="page"]:active {
-		color: var(--text-color-link);
+		color: var(--color-gray-90);
 	}
 
 	nav {
