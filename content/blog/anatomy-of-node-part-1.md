@@ -214,7 +214,7 @@ We can see it in `CreateMainEnvironment` function, after the `snapshot_data` che
 ```cpp
 // node/src/node_main_instance.cc
 NodeMainInstance::CreateMainEnvironment(ExitCode* exit_code) {
- // beginning of function ommited for clarity
+ // beginning of function omitted for clarity
 
   Local<Context> context;
   DeleteFnPtr<Environment, FreeEnvironment> env;
@@ -226,7 +226,7 @@ NodeMainInstance::CreateMainEnvironment(ExitCode* exit_code) {
                                 args_,
                                 exec_args_));
                                 
-    // openssl initialisation ommited for clarity
+    // openssl initialisation omitted for clarity
 
   } else {
   // build a new Context from scratch
@@ -260,7 +260,7 @@ Environment* CreateEnvironment(
   HandleScope handle_scope(isolate);
 
   const bool use_snapshot = context.IsEmpty();
-// environment initialisation ommited for clarity
+// environment initialisation omitted for clarity
 
 // initialize context from snapshot
   if (use_snapshot) {
