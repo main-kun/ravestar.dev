@@ -3,7 +3,62 @@ title: "The Anatomy of Node: Crafting a Runtime"
 subtitle: "Part I - Getting started with V8"
 description: "Dive deep into Node.js internals. Part 1: Get hands-on with compiling the V8 engine, embedding it in C++ and running your first JS code."
 date: 2025-04-06
+image: /img/crafting_a_runtime_hero.png
 ---
+
+{% css %}
+.hero-image {
+  width: 100%;
+  max-width: none;
+}
+
+.image-attribution {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.image-attribution a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.image-attribution a:hover {
+  color: #333;
+}
+
+@media (min-width: 640px) {
+  .hero-image {
+    width: calc(100% + 4rem);
+    margin-left: -2rem;
+    margin-right: -2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-image {
+    width: calc(100% + 16rem);
+    margin-left: -8rem;
+    margin-right: -8rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-image {
+    width: calc(100% + 24rem);
+    margin-left: -12rem;
+    margin-right: -12rem;
+  }
+}
+{% endcss %}
+
+<img src="../../public/img/crafting_a_runtime_hero.png" alt="Crafting a Runtime Hero Image" class="hero-image">
+<div class="image-attribution">
+  The struggles of diving into the depths of Node.js illustrated by the wonderful <a href="https://www.behance.net/elenakolen79ab" target="_blank" rel="noopener">Elena</a>
+</div>
 
 After nearly a decade in software engineering, Node.js has been a constant presence in my work.
 Yet, despite using it extensively, I feel like I only have a vague idea of how it functions internally.
@@ -334,6 +389,9 @@ We'll skip implementing this binding for now.
 The list of built-ins available in this raw V8 environment is much shorter than Node's.
 Running the same script in Node, for comparison, we get a list about two times longer.
 
+<details>
+<summary>Check the full list of Node's built-ins</summary>
+
 ```js
 ["Object","Function","Array","Number","parseFloat","parseInt","Infinity","NaN",
 "undefined","Boolean","String","Symbol","Date","Promise","RegExp","Error","AggregateError",
@@ -355,10 +413,8 @@ Running the same script in Node, for comparison, we get a list about two times l
 "CompressionStream","DecompressionStream","fetch","FormData","Headers","Request","Response"]
 ```
 
-Seeing the built-ins laid out this way, it becomes obvious where Node's own global definitions start.
-Right after `WebAssembly`, starting from `process`.
-Even the order, starting from `process`, `global` and `Buffer`
-seems logical in terms of their importance for Node.
+</details>
+
 ### Are we async yet?
 
 The state of async in our current setup is rather interesting.
