@@ -378,7 +378,7 @@ returns the following list
 ```
 
 Contrary to my expectations, `console` is actually here!
-However, using `console.log` inside the script does produce
+However, using `console.log` inside the script does not produce
 any output currently.
 This is because while V8 provides the console object structure,
 it's the embedding application's responsibility
