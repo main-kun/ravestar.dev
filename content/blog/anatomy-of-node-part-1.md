@@ -6,54 +6,6 @@ date: 2025-04-06
 image: /img/crafting_a_runtime_hero.png
 ---
 
-{% css %}
-.hero-image {
-  width: 100%;
-  max-width: none;
-}
-
-.image-attribution {
-  text-align: center;
-  font-size: 0.875rem;
-  color: #666;
-  margin-top: 0.5rem;
-  margin-bottom: 2rem;
-}
-
-.image-attribution a {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.image-attribution a:hover {
-  color: #333;
-}
-
-@media (min-width: 640px) {
-  .hero-image {
-    width: calc(100% + 4rem);
-    margin-left: -2rem;
-    margin-right: -2rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .hero-image {
-    width: calc(100% + 16rem);
-    margin-left: -8rem;
-    margin-right: -8rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .hero-image {
-    width: calc(100% + 24rem);
-    margin-left: -12rem;
-    margin-right: -12rem;
-  }
-}
-{% endcss %}
 
 <img src="../../public/img/crafting_a_runtime_hero.png" alt="Crafting a Runtime Hero Image" class="hero-image">
 <div class="image-attribution">
