@@ -1,7 +1,7 @@
 ---
 title: "Why devs need DevOps"
 description: "DevOps isn't just for ops teams—it's foundational knowledge for developers. Learn why understanding The Three Ways gives you predictive powers to avoid costly mistakes and optimize your systems globally, not just locally."
-date: 2025-11-1
+date: 2025-11-11
 image: /img/devops/hero.png
 ---
 
