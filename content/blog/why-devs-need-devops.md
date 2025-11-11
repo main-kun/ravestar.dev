@@ -1,6 +1,10 @@
 ---
 title: "Why devs need DevOps"
+description: "DevOps isn't just for ops teams—it's foundational knowledge for developers. Learn why understanding The Three Ways gives you predictive powers to avoid costly mistakes and optimize your systems globally, not just locally."
+date: 2025-11-1
+image: /img/devops/hero.png
 ---
+
 
 <img src="../../public/img/devops/hero.png" alt="Devs Need Devops Hero Image" class="hero-image">
 <div class="image-attribution">
@@ -29,7 +33,7 @@ There are only three principles and each is almost obvious and easy to understan
 
 ### I. The Way of the Flow
 
-<img src="../../public/img/devops/flow.png" alt="The Flow diagram">
+<img src="../../public/img/devops/flow.png" alt="The Flow principle illustration">
 
 Imagine your software team as a black box. On the left from the box you have your customers requests and wants, on the right you have the Value the product brings. The Flow is everything that happens in the box and transforms the requests into Value. If you have a software project, the Flow exists whether you think about it or not. 
 
@@ -44,11 +48,15 @@ The Way of the Flow demands systems thinking. We need to learn to think about no
 
 ### II. The Way of Feedback
 
+<img src="../../public/img/devops/feedback.png" alt="The Feedback principle illustration">
+
 As user needs pass through The Flow to become Value, you are inevitably going to run into issues. Feedback is all the ways you discover problems during The Flow to guarantee that the Value delivery is not impeded. This includes many mechanisms: all sorts of testing, release techniques like canary releases or blue/green deployments, observability. Humans provide feedback too, of course. A ticket with a discovered bug from a user is also a mechanism of feedback.
 
 The core insight here is that the problems are easiest to fix the closer they happen to the source. A failed unit test is usually trivial to fix because it provides complete context into where the problem happened. A bug raised in production provides the least immediate information about the specific cause of the problem. The overarching goal here is to make the Feedback loops as short as possible. The shorter the loop - the easier it is to fix the problem.
 
 ### III. Continuous Learning and Experimentation
+
+<img src="../../public/img/devops/learning.png" alt="The Learning principle illustration">
 
 During the process of transforming requests into Value, the people involved are diving deep into the problems and sub-problems assigned to them. While doing this work they form new knowledge about the system itself, its environment and user needs. The issue here is that the knowledge is local to the brains of the person solving the problem. Continuous learning emphasizes that in order to be at our most effective, it's crucial to transform the local knowledge into global, accessible to the larger team. "Continuous" is the key here. When your knowledge sharing is not systemized and is not built into the daily work, you are bound to be regularly losing information and knowledge. The mechanisms here are numerous, but the main one is of course documentation. Devs frequently skip out on documentation and/or just info-dump into a README.md. This guarantees an outcome where knowledge concentrates and does not spread out through the team. Or creates "tribal knowledge" which is too extremely lossy. The Third Way demands this is systemized and approached with the same diligence as the rest of the daily work.
 
@@ -82,6 +90,8 @@ With regards to the Culture of Learning and Experimentation I don't think I even
 A lot of us accept this as just part of the job. But that's not normal. Systems should be comprehensible and should not require months to understand. Devs usually don't value that part of the work, treating knowledge sharing as an afterthought. But knowledge sharing is non-negotiable. When systemized and treated as essential work it becomes a power multiplier for the whole team. Systems become crystal clear, onboarding becomes easy and nobody has to do code archeology for hours to fix simple bugs and add features.
 
 ## The Local and Global Maxima
+
+<img src="../../public/img/devops/global_maxima.png" alt="Illustration of the local and global maxima">
 
 When the Three Ways become the truth, one gains X-Ray vision into the daily process of work. One of the insights that emerges is how decisions tend to be made and argued about. A lot of mistakes are made the same way, from optimizing towards local parameters. For example the local parameters could be the speed of development of a specific system or feature, or usage of known tools instead of the right ones. This pushes the system at this specific point towards a local maximum. It fulfills the immediate needs and goals and everyone seems to be happy, both the devs and stakeholders.
 
