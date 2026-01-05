@@ -31,6 +31,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       method: "POST",
       headers: {
         "Authorization": `Token ${context.env.BUTTONDOWN_API_KEY}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         email_address: body.email_address,
@@ -40,7 +41,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const response = await fetch(url, options);
     const data = await response.json();
 
+    console.log("Buttondown response:", response.status, JSON.stringify(data));
+
     if (!response.ok) {
+      console.error("Buttondown error:", response.status, JSON.stringify(data));
       return new Response(
         JSON.stringify({ error: "Failed to subscribe", details: data }),
         { status: response.status, headers: { "Content-Type": "application/json" } }
