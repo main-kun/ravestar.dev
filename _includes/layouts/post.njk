@@ -2,6 +2,7 @@
 layout: layouts/base.njk
 ---
 {%- css %}{% include "public/css/prism-coldark.css" %}{% endcss %}
+{%- js %}{% include "js/newsletter.js" %}{% endjs %}
 <h1>{{ title }}</h1>
 <h2 class="post-subtitle">{{ subtitle }}</h2>
 
@@ -24,3 +25,5 @@ layout: layouts/base.njk
 </ul>
 {%- endif %}
 {%- endif %}
+
+{% include "components/newsletter-signup.njk" %}
